@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using Theme;
 using Utils;
 
@@ -24,6 +25,11 @@ namespace ProjectPage
         public void Save()
         {
             JsonSaveHelper.Save(this, location);
+        }
+
+        public new static Project FromJson(string json)
+        {
+            return JsonConvert.DeserializeObject<Project>(json);
         }
     }
 }

@@ -21,6 +21,7 @@ namespace ProjectPage
         [SerializeField] private TextMeshProUGUI volumeText;
         [SerializeField] private Slider pitchSlider;
         [SerializeField] private TextMeshProUGUI pitchText;
+        [SerializeField] private Button deleteButton;
 
         [NonSerialized] public AudioSourceWrapper CuePlayerSource;
         
@@ -44,7 +45,6 @@ namespace ProjectPage
         
         private void Start()
         {
-            _cue = new SoundCue();
             playCue.onClick.AddListener(PlayCue);
             selectFile.onClick.AddListener(SelectFile);
 
@@ -62,8 +62,14 @@ namespace ProjectPage
             
             volumeSlider.onValueChanged.AddListener(VolumeChanged);
             pitchSlider.onValueChanged.AddListener(PitchChanged);
-            
-            ProjectPageManager.SelectedProject.cues.Add(_cue);
+
+            deleteButton.onClick.AddListener(Delete);
+
+            if (_cue == null)
+            {
+                _cue = new SoundCue();
+                ProjectPageManager.SelectedProject.cues.Add(_cue);
+            }
 
             EaseInChanged(0);
             EaseOutChanged(0);
@@ -79,8 +85,7 @@ namespace ProjectPage
             easeOut.onValueChanged.RemoveListener(EaseOutChanged);
             volumeSlider.onValueChanged.RemoveListener(VolumeChanged);
             pitchSlider.onValueChanged.RemoveListener(PitchChanged);
-            
-            ProjectPageManager.SelectedProject.cues.Remove(_cue);
+            deleteButton.onClick.RemoveListener(Delete);
         }
 
         private void PlayCue()
@@ -150,6 +155,12 @@ namespace ProjectPage
         {
             _cue.pitch = pitch;
             pitchText.text = pitch.ToString("F1");
+        }
+
+        private void Delete()
+        {
+            ProjectPageManager.SelectedProject.cues.Remove(_cue);
+            Destroy(gameObject);
         }
     }
 }

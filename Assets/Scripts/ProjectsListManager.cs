@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Newtonsoft.Json;
 using ProjectPage;
 using TMPro;
 using UIElements;
 using UnityEngine;
+using Utils;
 
-public class ProjectsListManager : MonoBehaviour
+public class ProjectsListManager : CurrentInstanced<ProjectsListManager>
 {
     [SerializeField] private Transform projectsList;
     [SerializeField] private ProjectItemButton projectPrefab;
@@ -28,10 +28,20 @@ public class ProjectsListManager : MonoBehaviour
             File.WriteAllText(location, JsonConvert.SerializeObject(_allProjects));
         }
 
+        var dupe = new List<string>(_allProjects);
+        
         foreach (var projLocation in _allProjects)
         {
+            if (!File.Exists(projLocation))
+            {
+                dupe.Remove(projLocation);
+                continue;
+            }
+            
             CreateProject(Project.FromJson(File.ReadAllText(projLocation)), false);
         }
+
+        _allProjects = dupe;
     }
 
     public void CreateProject(string title, string location)
@@ -49,6 +59,13 @@ public class ProjectsListManager : MonoBehaviour
         if (!updateList) return;
         
         _allProjects.Add(project.location);
+        var location = Application.persistentDataPath + "/projects.json";
+        File.WriteAllText(location, JsonConvert.SerializeObject(_allProjects));
+    }
+
+    public void RemoveProject(Project project)
+    {
+        _allProjects.Remove(project.location);
         var location = Application.persistentDataPath + "/projects.json";
         File.WriteAllText(location, JsonConvert.SerializeObject(_allProjects));
     }

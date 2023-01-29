@@ -359,7 +359,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &262301823
 RectTransform:
   m_ObjectHideFlags: 0
@@ -637,7 +637,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -11.929993, y: -0.00088500977}
-  m_SizeDelta: {x: -23.87, y: -440.83002}
+  m_SizeDelta: {x: -23.87, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &389712877
 MonoBehaviour:
@@ -942,7 +942,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &670378967
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1191,7 +1191,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2025,7 +2025,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   title: {fileID: 1345271277}
-  cuePrefab: {fileID: 2201396946473795172, guid: 2f09d31207fdd9f419d19c34c6d086eb, type: 3}
+  cuePrefab: {fileID: 616833353076935942, guid: 2f09d31207fdd9f419d19c34c6d086eb, type: 3}
   cueList: {fileID: 389712876}
   cuePreviewSource: {fileID: 2084508867}
   mainMenu: Main App

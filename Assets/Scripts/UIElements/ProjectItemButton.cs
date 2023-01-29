@@ -2,20 +2,25 @@
 using KevinCastejon.MoreAttributes;
 using ProjectPage;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using Utils;
 
 namespace UIElements
 {
-    public class ProjectItemButton : MonoBehaviour, IPointerClickHandler
+    public class ProjectItemButton : MonoBehaviour
     {
         [NonSerialized] public Project Project;
         [SerializeField, Scene] private string projectPageScene;
         
-        public void OnPointerClick(PointerEventData eventData)
+        public void EnterProject()
         {
             ProjectPageManager.SelectedProject = Project;
             SceneUtilities.Instance.LoadScene(projectPageScene);
+        }
+
+        public void Delete()
+        {
+            ProjectsListManager.Current.RemoveProject(Project);
+            Destroy(gameObject);
         }
     }
 }

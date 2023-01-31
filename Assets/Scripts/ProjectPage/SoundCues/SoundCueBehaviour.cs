@@ -2,13 +2,14 @@
 using System.Collections;
 using System.Linq;
 using DG.Tweening;
+using ProjectPage.Projects;
 using SimpleFileBrowser;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Utils;
 
-namespace ProjectPage
+namespace ProjectPage.SoundCues
 {
     public class SoundCueBehaviour : MonoBehaviour
     {
@@ -67,8 +68,9 @@ namespace ProjectPage
 
             if (_cue == null)
             {
-                _cue = new SoundCue();
+                _cue = new SoundCue("New Sound Cue");
                 ProjectPageManager.SelectedProject.cues.Add(_cue);
+                ProjectPageManager.SelectedProject.CuesChanged();
             }
 
             EaseInChanged(0);
@@ -116,6 +118,8 @@ namespace ProjectPage
                     var path = FileBrowser.Result[0];
                     filePath.text = path;
                     _cue.soundFile = path;
+                    _cue.name = path;
+                    ProjectPageManager.SelectedProject.CuesChanged();
                     yield return _cue.CacheAudio();
                 }
             }
@@ -160,6 +164,7 @@ namespace ProjectPage
         private void Delete()
         {
             ProjectPageManager.SelectedProject.cues.Remove(_cue);
+            ProjectPageManager.SelectedProject.CuesChanged();
             Destroy(gameObject);
         }
     }

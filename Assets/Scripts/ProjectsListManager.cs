@@ -2,6 +2,7 @@
 using System.IO;
 using Newtonsoft.Json;
 using ProjectPage;
+using ProjectPage.Projects;
 using TMPro;
 using UIElements;
 using UnityEngine;
@@ -68,5 +69,10 @@ public class ProjectsListManager : CurrentInstanced<ProjectsListManager>
         _allProjects.Remove(project.location);
         var location = Application.persistentDataPath + "/projects.json";
         File.WriteAllText(location, JsonConvert.SerializeObject(_allProjects));
+
+        if (PlayerPrefs.GetInt(PlayerPrefUtilities.PlayerPrefs.DeleteProjectFile.ToString(), 0) == 1)
+        {
+            File.Delete(project.location);
+        }
     }
 }

@@ -6,11 +6,12 @@ using UnityEngine;
 using UnityEngine.Networking;
 using Utils;
 
-namespace ProjectPage
+namespace ProjectPage.SoundCues
 {
     [Serializable]
     public class SoundCue
     {
+        public string name;
         public string soundFile;
         public Ease inEase;
         public Ease outEase;
@@ -18,6 +19,11 @@ namespace ProjectPage
         public float pitch;
         
         private AudioClip _cachedClip;
+
+        public SoundCue(string name)
+        {
+            this.name = name;
+        }
 
         public async void Play(AudioSourceWrapper source)
         {

@@ -9,16 +9,21 @@ public class OpeningSequence : MonoBehaviour
     [SerializeField] private CanvasGroup title;
     [SerializeField] private CanvasGroup description;
     [SerializeField] private RectTransform sidePanelWrapper;
-    [SerializeField] private RectTransform mainMenu;
+    [SerializeField] private RectTransform panel;
     
     private IEnumerator Start()
     {
+        if (PlayerPrefs.GetInt(PlayerPrefUtilities.PlayerPrefs.SkipOpeningSequence.ToString(), 0) == 1)
+        {
+            yield break;
+        }
+
         title.alpha = 0;
         description.alpha = 0;
         
         var sizeDelta = sidePanelWrapper.sizeDelta;
         sidePanelWrapper.sizeDelta = new Vector2(0, sizeDelta.y);
-        mainMenu.SetLeft(-180);
+        panel.SetLeft(0);
         
         title.DOFade(1, 1);
         yield return new WaitForSeconds(0.25f);
@@ -28,7 +33,7 @@ public class OpeningSequence : MonoBehaviour
         sidePanelWrapper.DOSizeDelta(sizeDelta, 1f)
             .SetEase(Ease.InOutCubic);
         
-        DOTween.To(() => mainMenu.offsetMin.x, f => mainMenu.SetLeft(f), 0, 1f)
+        DOTween.To(() => panel.offsetMin.x, f => panel.SetLeft(f), 180, 1f)
             .SetEase(Ease.InOutCubic);
     }
 

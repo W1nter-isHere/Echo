@@ -34,9 +34,6 @@ namespace ProjectPage.SoundCues
             {
                 _cue = value;
                 filePath.text = _cue.soundFile;
-                var eases = Enum.GetValues(typeof(Ease)).Cast<Ease>().ToList();
-                easeIn.SetValueWithoutNotify(eases.IndexOf(_cue.inEase));
-                easeOut.SetValueWithoutNotify(eases.IndexOf(_cue.outEase));
                 volumeSlider.SetValueWithoutNotify(_cue.volume);
                 volumeText.text = _cue.volume.ToString("F1");
                 pitchSlider.SetValueWithoutNotify(_cue.pitch);
@@ -73,8 +70,10 @@ namespace ProjectPage.SoundCues
                 ProjectPageManager.SelectedProject.CuesChanged();
             }
 
-            EaseInChanged(0);
-            EaseOutChanged(0);
+            var eases = Enum.GetValues(typeof(Ease)).Cast<Ease>().ToList();
+            easeIn.value = eases.IndexOf(_cue.inEase);
+            easeOut.value = eases.IndexOf(_cue.outEase);
+            
             VolumeChanged(volumeSlider.value);
             PitchChanged(pitchSlider.value);
         }

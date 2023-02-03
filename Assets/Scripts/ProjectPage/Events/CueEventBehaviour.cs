@@ -74,6 +74,10 @@ namespace ProjectPage.Events
             {
                 _cueEvent = new CueEvent();
                 ProjectPageManager.SelectedProject.timeline.Add(_cueEvent);
+                
+                hour.text = "00";
+                minute.text = "00";
+                second.text = "00";
             }
             
             extrasList.gameObject.SetActive(false);

@@ -12,6 +12,7 @@ namespace ProjectPage.SoundCues
     public class SoundCue
     {
         public string name;
+        public string id;
         public string soundFile;
         public Ease inEase;
         public Ease outEase;
@@ -23,6 +24,7 @@ namespace ProjectPage.SoundCues
         public SoundCue(string name)
         {
             this.name = name;
+            id = Guid.NewGuid().ToString();
         }
 
         public async void Play(AudioSourceWrapper source)

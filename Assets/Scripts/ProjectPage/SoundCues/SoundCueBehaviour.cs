@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.IO;
 using System.Linq;
 using DG.Tweening;
 using ProjectPage.Projects;
@@ -117,7 +118,7 @@ namespace ProjectPage.SoundCues
                     var path = FileBrowser.Result[0];
                     filePath.text = path;
                     _cue.soundFile = path;
-                    _cue.name = path;
+                    _cue.name = Path.GetFileName(path);
                     ProjectPageManager.SelectedProject.CuesChanged();
                     yield return _cue.CacheAudio();
                 }

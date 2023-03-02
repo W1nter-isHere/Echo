@@ -39,7 +39,7 @@ namespace ProjectPage.Events
         public List<SoundCue> GetSoundCues(Project project)
         {
             return soundValues
-                .Select(name => project.cues.Find(cue => cue.name == name))
+                .Select(id => project.cues.Find(cue => cue.id == id))
                 .ToList();
         }
 

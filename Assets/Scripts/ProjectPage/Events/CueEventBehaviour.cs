@@ -159,14 +159,16 @@ namespace ProjectPage.Events
         private void NewSoundCue(string guid, string option, bool initializeInCueEvent)
         {
             var cue = Instantiate(soundCuePrefab, extrasList);
-            var options = ProjectPageManager.SelectedProject.cues.Select(c => c.name).Distinct().ToList();
-            cue.AddOptions(options);
-            var indexOf = options.IndexOf(option);
+            var data = ProjectPageManager.SelectedProject.cues.ToDictionary(c => c.name, c => c.id);
+            var names = data.Keys.ToList();
+            var ids = data.Values.ToList();
+            cue.AddOptions(names);
+            var indexOf = ids.IndexOf(option);
             cue.value = indexOf == -1 ? 0 : indexOf;
 
             if (initializeInCueEvent)
             {
-                _cueEvent.AddSoundCue(guid, cue.options[cue.value].text);
+                _cueEvent.AddSoundCue(guid, ids[cue.value]);
                 if (!_expanded)
                 {
                     _expanded = true;
@@ -176,22 +178,23 @@ namespace ProjectPage.Events
             
             _cueDropdowns ??= new List<TMP_Dropdown>();
             _cueDropdowns.Add(cue);
-            cue.onValueChanged.AddListener(opt => SoundCueChanged(guid, cue.options[opt].text));
+            cue.onValueChanged.AddListener(opt => SoundCueChanged(guid, ProjectPageManager.SelectedProject.cues.Select(c => c.id).ToArray()[opt]));
             
             RebuildLayout();
         }
 
         private void UpdateDropdowns()
         {
-            var options = ProjectPageManager.SelectedProject.cues.Select(c => c.name).Distinct().ToList();
             foreach (var dropdown in _cueDropdowns)
             {
-                var t = dropdown.captionText.text;
+                // TODO
+                var value = dropdown.value;
+                var ids = ProjectPageManager.SelectedProject.cues.Select(c => c.id).ToList();
+                // var index = ids
+                
                 dropdown.ClearOptions();
-                dropdown.AddOptions(options);
-
-                var i = options.IndexOf(t);
-                if (i >= 0 ) dropdown.value = i;
+                dropdown.AddOptions(ProjectPageManager.SelectedProject.cues.Select(c => c.name).Distinct().ToList());
+                
             }
         }
         
